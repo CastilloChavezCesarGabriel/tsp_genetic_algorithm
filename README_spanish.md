@@ -4,7 +4,7 @@
 
 Este programa con interfaz gráfica resuelve el Problema del Viajante de Comercio (TSP) tras generar un conjunto de
 ciudades aleatorias sobre un lienzo y evolucionar una población de rutas candidatas a lo largo de 500 generaciones para
-encontrar el recorrido más óptimo. Cada generación aplica selección por torneo para elegir los padres más aptos,
+encontrar el recorrido casi óptimo. Cada generación aplica selección por torneo para elegir los padres más aptos,
 Cruce de Orden (OX) para combinar sus secuencias de ciudades en hijos, y mutación por intercambio para introducir
 diversidad intercambiando dos ciudades aleatorias con un 5% de probabilidad. Una estrategia de elitismo preserva
 la mejor ruta encontrada hasta el momento, asegurando que la calidad de la solución nunca se degrade a lo largo de
