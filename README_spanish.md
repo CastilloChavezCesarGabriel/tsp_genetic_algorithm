@@ -19,7 +19,7 @@ las generaciones.
 ## Bibliotecas de Python Utilizadas
 
 - **tkinter.Tk**: Proporciona la ventana principal de la aplicación para la interfaz gráfica.
-- **tkinter.Canvas**: Renderiza ciudades y conexiones de rutas sobre una superficie dibujable.
+- **tkinter.Canvas**: Renderiza las ciudades y conexiones de rutas sobre una superficie dibujable.
 - **tkinter.Button**: Crea botones interactivos que ejecutan callbacks al ser pulsados.
 - **tkinter.Spinbox**: Permite al usuario seleccionar un valor numérico dentro de un rango limitado.
 - **tkinter.Label**: Muestra texto como el conteo de generaciones y la mejor distancia.
@@ -72,20 +72,20 @@ tsp_genetic_algorithm/
 │   │   ├── city_factory.py              # Crea ciudades en posiciones aleatorias
 │   │   └── route_factory.py             # Crea poblaciones de rutas aleatorias
 │   ├── observers/
-│   │   └── evolution_observer.py        # Interfaz observador para eventos de evolución
+│   │   └── evolution_observer.py        # Interfaz que observa los eventos de evolución
 │   └── visitors/
-│       ├── city_visitor.py              # Interfaz visitante para coordenadas de ciudad
-│       ├── route_visitor.py             # Interfaz visitante para segmentos de ruta
-│       └── evolution_visitor.py         # Interfaz visitante para estadísticas y mejor ruta
+│       ├── city_visitor.py              # Interfaz que visita las coordenadas de una ciudad
+│       ├── route_visitor.py             # Interfaz que visita segmentos de ruta
+│       └── evolution_visitor.py         # Interfaz que visita las estadísticas y la mejor ruta
 ├── view/
 │   ├── view.py                          # Orquestador principal de la vista
 │   ├── control_panel.py                 # Selector numérico y botones
-│   ├── map_canvas.py                    # Lienzo para renderizar ciudades y rutas
+│   ├── map_canvas.py                    # Lienzo (mapa) para renderizar ciudades y rutas
 │   └── factories/
 │       └── widget_abstract_factory.py   # Creación de widgets Tkinter con estilo
 ├── controller/
 │   ├── controller.py                    # Orquestador MVC
-│   └── route_renderer.py               # Renderiza segmentos de ruta en el lienzo
+│   └── route_renderer.py               # Renderiza segmentos de ruta en el mapa
 ├── validation/
 │   └── input_parser.py                  # Análisis de enteros con límites
 └── tests/
@@ -97,94 +97,90 @@ tsp_genetic_algorithm/
 
 ## Patrones de Diseño
 
-| Patrón               | Uso                                                                                                                                        |
-|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| **Observer**         | El Modelo notifica al Controlador sobre la evolución de generaciones y la finalización                                                     |
-| **Visitor**          | Ciudad y Ruta exponen datos a través de interfaces visitante sin exponer estado directamente (siempre asegura comportamiento sobre estado) |
-| **Abstract Factory** | `WidgetAbstractFactory` crea una familia de widgets con estilo relacionados (etiquetas, botones, selectores)                               |
-| **Factory Method**   | `CityFactory` crea ciudades en posiciones aleatorias; `RouteFactory` crea poblaciones de rutas aleatorias                                  |
+| Patrón               | Uso                                                                                                           |
+|----------------------|---------------------------------------------------------------------------------------------------------------|
+| **Observer**         | El `Modelo` notifica al `Controlador` sobre la evolución de generaciones y su finalización                    |
+| **Visitor**          | Las clases `Ciudad` y `Ruta` exponen datos a través de interfaces sin exponer su estado directamente          |
+| **Abstract Factory** | `WidgetAbstractFactory` crea una familia de widgets con estilos relacionados (etiquetas, botones, selectores) |
+| **Factory Method**   | `CityFactory` crea ciudades en posiciones aleatorias; `RouteFactory` crea poblaciones de rutas aleatorias     |
 
 ## Flujo del Programa
 
-La aplicación inicia creando el Modelo, la Vista y el Controlador en `main.py`. El Controlador obtiene las dimensiones del lienzo de la Vista y las pasa al Modelo, el cual inicializa el CityFactory con el área de dibujo disponible.
+1. La aplicación crea el `Modelo`, la `Vista` y el `Controlador` en `main.py`, para darle al Controlador las dimensiones del mapa de la Vista, pasarlas al Modelo e inicializar el CityFactory con el área de dibujo disponible.
 
-Cuando el usuario establece una cantidad de ciudades y hace clic en Inicio, el Controlador valida la entrada a través del InputParser. Si la entrada es inválida, un diálogo advierte al usuario. De lo contrario, el Modelo genera ciudades aleatorias y crea una población inicial de rutas aleatorias.
+2. Cuando el usuario establece una cantidad de ciudades y hace clic en Inicio, el Controlador valida la entrada a través del InputParser. Si la entrada es inválida, se muestra un diálogo que advierte al usuario. De lo contrario, el Modelo genera ciudades aleatorias y crea una población inicial de rutas igualmente aleatorias.
 
-El Controlador inicia un ciclo de animación que llama al método `step` del Modelo cada 50 milisegundos. Cada paso evoluciona la población preservando la mejor ruta, seleccionando padres mediante selección por torneo, produciendo hijos mediante Cruce de Orden y aplicando mutación por intercambio con un 5% de probabilidad. La población se clasifica entonces por distancia total.
+3. El Controlador inicia un ciclo de animación que llama al método `step` del Modelo cada 50 milisegundos, para evolucionar (por pasos) la población según sea la mejor ruta, seleccionar a los padres mediante selección por torneo, generar hijos mediante Cruce de Orden y aplicar mutación por intercambio con un 5% de probabilidad. La población se clasifica entonces por distancia total.
 
-Después de cada generación, el Modelo notifica al Controlador a través del patrón Observer. El Controlador vuelve a renderizar el lienzo usando el patrón Visitor: el RouteRenderer dibuja los segmentos de ruta entre ciudades, y el Controlador dibuja los puntos de las ciudades en cada coordenada.
+4. Después de cada generación, el Modelo notifica al Controlador a través del patrón Observer y este renderiza el lienzo o mapa usando el patrón Visitor.
 
-Si el usuario hace clic en Pausa, el ciclo de animación se detiene y la evolución puede reanudarse haciendo clic en Inicio nuevamente con la misma cantidad de ciudades. Cambiar la cantidad de ciudades después de iniciar requiere presionar Reinicio primero, lo cual genera un nuevo conjunto de ciudades y una nueva población.
-
-Después de 500 generaciones, el Modelo notifica la finalización. El Controlador detiene el ciclo de animación y la Vista deshabilita los botones de Inicio y Pausa, dejando solo Reinicio disponible para comenzar una nueva ejecución.
+5. Después de 500 generaciones, el Modelo notifica la finalización, el Controlador detiene los ciclos de animación y la Vista deshabilita los botones de Inicio y Pausa, dejando solamente el botón de Reinicio disponible para comenzar un nuevo caso.
 
 ## Configuración en Mac
 
-Antes de ejecutar el proyecto, asegúrese de tener instalado lo siguiente:
+Antes de ejecutar el proyecto, asegúrate de instalar lo siguiente:
 
 1. **Python 3.10+**: [Descargas de Python](https://www.python.org/downloads/)
 2. **Tkinter**: Incluido con las instalaciones estándar de Python en macOS
 
 ### Pasos
 
-1. Verificar que Python esté instalado:
+1. Verifica que Python esté instalado:
    ```bash
    python3 --version
    ```
-2. Verificar que Tkinter esté disponible:
+2. Verifica que Tkinter esté disponible:
    ```bash
    python3 -c "import tkinter; print('Tkinter está disponible')"
    ```
-3. Clonar el repositorio y crear una rama de trabajo:
+3. Clona el repositorio y crea una nueva rama de trabajo (Ya que la rama **main** es solamente para el código en producción):
    ```bash
    git clone <url-del-repositorio>
    cd tsp_genetic_algorithm
    git checkout -b <nombre-de-rama>
    ```
-   Evite trabajar directamente en `main`. Siempre cree una rama para sus cambios.
-4. Ejecutar la aplicación:
+4. Ejecuta la aplicación:
    ```bash
    python3 main.py
    ```
-5. Ejecutar las pruebas:
+5. Ejecuta las pruebas:
    ```bash
    python3 -m unittest discover tests/ -v
    ```
 
 ## Configuración en Windows
 
-Antes de ejecutar el proyecto, asegúrese de tener instalado lo siguiente:
+Antes de ejecutar el proyecto, asegúrate de instalar lo siguiente:
 
 1. **Python 3.10+**: [Descargas de Python](https://www.python.org/downloads/)
 2. **Tkinter**: Incluido con el instalador estándar de Python. Durante la instalación, asegúrese de que la casilla **tcl/tk and IDLE** esté seleccionada.
 
 ### Pasos
 
-1. Verificar que Python esté instalado (abrir Símbolo del Sistema o PowerShell):
+1. Verifica que Python esté instalado (abre el Símbolo del Sistema o PowerShell):
    ```cmd
    python --version
    ```
-   Si `python` no es reconocido, agregue Python a la variable PATH del sistema. La ruta de instalación por defecto es:
+   Si `python` no es reconocido, agrega Python a la variable PATH del sistema, en donde, la ruta de instalación por defecto es:
    ```
    C:\Users\<usuario>\AppData\Local\Programs\Python\Python3xx\
    ```
-2. Verificar que Tkinter esté disponible:
+2. Verifica que Tkinter esté disponible:
    ```cmd
    python -c "import tkinter; print('Tkinter está disponible')"
    ```
-   Si Tkinter no está disponible, reinstale Python y marque la opción **tcl/tk and IDLE** en el instalador.
-3. Clonar el repositorio y crear una rama de trabajo:
+   Si no, reinstala Python y marca la opción **tcl/tk and IDLE** en el instalador.
+3. Clona el repositorio y crea una nueva rama de trabajo (Ya que la rama **main** es solamente para el código en producción):
    ```cmd
    git clone <url-del-repositorio>
    cd tsp_genetic_algorithm
    git checkout -b <nombre-de-rama>
    ```
-   Evite trabajar directamente en `main`. Siempre cree una rama para sus cambios.
-4. Ejecutar la aplicación:
+4. Ejecuta la aplicación:
    ```cmd
    python main.py
    ```
-5. Ejecutar las pruebas:
+5. Ejecuta las pruebas:
    ```cmd
    python -m unittest discover tests/ -v
    ```
@@ -196,4 +192,4 @@ Licencia Creative Commons Atribución 4.0 Internacional (CC BY 4.0).
 ## Agradecimientos
 
 Este proyecto fue creado como un ejemplo educativo para demostrar el patrón de diseño Modelo-Vista-Controlador (MVC)
-en Python con Tkinter.
+en Python con Tkinter y la aplicación de los algoritmos genéticos para la resolución de problemas cotidianos.
