@@ -104,17 +104,15 @@ tsp_genetic_algorithm/
 
 ## Program Flow
 
-The application starts by creating the Model, View and Controller in `main.py`. The Controller retrieves the canvas dimensions from the View and passes them to the Model, which initializes the CityFactory with the available drawing area.
+1. The application sets up the `Model`, `View` and `Controller` in `main.py`, so the Controller can retrieve the canvas dimensions from the View, forward them to the Model and initialize the CityFactory with the available drawing area.
 
-When the user sets a city count and clicks Start, the Controller validates the input through the InputParser. If the input is invalid, a dialog warns the user. Otherwise, the Model generates random cities and creates an initial population of shuffled routes.
+2. Once the user picks a city count and clicks Start, the Controller runs the input through the InputParser. If the value is invalid, a warning dialog is shown. Otherwise, the Model scatters random cities and builds an initial population of equally random routes.
 
-The Controller begins an animation loop that calls the Model's `step` method every 50 milliseconds. Each step evolves the population by preserving the best route, selecting parents through tournament selection, producing children via Order Crossover and applying swap mutation with a 5% probability. The population is then ranked by total distance.
+3. The Controller kicks off an animation loop that calls the Model's `step` method every 50 milliseconds, incrementally evolving the population by preserving the best route, picking parents through tournament selection, breeding children via Order Crossover and applying swap mutation with a 5% probability. The population is then ranked by total distance.
 
-After each generation, the Model notifies the Controller through the Observer pattern. The Controller re-renders the canvas using the Visitor pattern: the RouteRenderer draws route segments between cities, and the Controller draws city dots at each coordinate.
+4. After each generation, the Model notifies the Controller through the Observer pattern, which in turn redraws the canvas through the Visitor pattern.
 
-If the user clicks Stop, the animation loop pauses and the evolution can be resumed by clicking Start again with the same city count. Changing the city count after starting requires pressing Reset first, which generates a fresh set of cities and a new population.
-
-After 500 generations, the Model notifies completion. The Controller stops the animation loop and the View disables the Start and Stop buttons, leaving only Reset available to begin a new run.
+5. After 500 generations, the Model signals completion, the Controller halts the animation loop and the View disables the Start and Stop buttons, leaving only the Reset button available to kick off a fresh run.
 
 ## Setting up on Mac
 
@@ -125,21 +123,20 @@ Before running the project, make sure you have the following installed:
 
 ### Steps
 
-1. Verify Python is installed:
+1. Check that Python is installed:
    ```bash
    python3 --version
    ```
-2. Verify Tkinter is available:
+2. Check that Tkinter is available:
    ```bash
    python3 -c "import tkinter; print('Tkinter is available')"
    ```
-3. Clone the repository and create a working branch:
+3. Clone the repository and create a new working branch (since the **main** branch is reserved for production code only):
    ```bash
    git clone <repository-url>
    cd tsp_genetic_algorithm
    git checkout -b <branch-name>
    ```
-   Avoid working directly on `main`. Always create a branch for your changes.
 4. Run the application:
    ```bash
    python3 main.py
@@ -158,7 +155,7 @@ Before running the project, make sure you have the following installed:
 
 ### Steps
 
-1. Verify Python is installed (open Command Prompt or PowerShell):
+1. Check that Python is installed (open Command Prompt or PowerShell):
    ```cmd
    python --version
    ```
@@ -166,18 +163,17 @@ Before running the project, make sure you have the following installed:
    ```
    C:\Users\<username>\AppData\Local\Programs\Python\Python3xx\
    ```
-2. Verify Tkinter is available:
+2. Check that Tkinter is available:
    ```cmd
    python -c "import tkinter; print('Tkinter is available')"
    ```
-   If Tkinter is missing, reinstall Python and check the **tcl/tk and IDLE** option in the installer.
-3. Clone the repository and create a working branch:
+   If not, reinstall Python and check the **tcl/tk and IDLE** option in the installer.
+3. Clone the repository and create a new working branch (since the **main** branch is reserved for production code only):
    ```cmd
    git clone <repository-url>
    cd tsp_genetic_algorithm
    git checkout -b <branch-name>
    ```
-   Avoid working directly on `main`. Always create a branch for your changes.
 4. Run the application:
    ```cmd
    python main.py
