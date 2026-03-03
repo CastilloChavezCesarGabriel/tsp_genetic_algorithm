@@ -8,16 +8,17 @@ class View:
     _CANVAS_WIDTH = 800
     _CANVAS_HEIGHT = 600
     _WINDOW_TITLE = "TSP - Genetic Algorithm"
-    _CANVAS_BACKGROUND = "#2C3E50"
-    _DEFAULT_STATISTICS = "Generation: 0  |  Best Distance: --"
+    _BACKGROUND = "#2C3E50"
+    _DEFAULT_STATISTICS = "Generation: 0  |  Best Distance: \u2014"
 
     def __init__(self, root: tk.Tk):
         root.title(self._WINDOW_TITLE)
-        root.configure(bg=self._CANVAS_BACKGROUND)
-        factory = WidgetAbstractFactory()
+        root.configure(bg=self._BACKGROUND)
+        root.resizable(False, False)
+        factory = WidgetAbstractFactory(root)
         self._controls = ControlPanel(root, factory)
         frame = factory.create_frame(root)
-        self._statistics_label = factory.create_label(
+        self._statistics_label = factory.create_statistics_label(
             frame, self._DEFAULT_STATISTICS)
         self._canvas = MapCanvas(root, (self._CANVAS_WIDTH, self._CANVAS_HEIGHT))
 

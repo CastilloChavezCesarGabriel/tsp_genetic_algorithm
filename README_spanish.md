@@ -20,11 +20,12 @@ las generaciones.
 
 - **tkinter.Tk**: Proporciona la ventana principal de la aplicación para la interfaz gráfica.
 - **tkinter.Canvas**: Renderiza las ciudades y conexiones de rutas sobre una superficie dibujable.
-- **tkinter.Button**: Crea botones interactivos que ejecutan callbacks al ser pulsados.
-- **tkinter.Spinbox**: Permite al usuario seleccionar un valor numérico dentro de un rango limitado.
 - **tkinter.Label**: Muestra texto como el conteo de generaciones y la mejor distancia.
 - **tkinter.Frame**: Agrupa y organiza widgets en secciones de diseño.
 - **tkinter.messagebox**: Muestra diálogos de error y validación al usuario.
+- **tkinter.ttk.Style**: Configura estilos de widgets temáticos con colores personalizados y estados hover.
+- **tkinter.ttk.Button**: Crea botones estilizados y temáticos con variantes de color (Inicio, Pausa, Reinicio).
+- **tkinter.ttk.Spinbox**: Proporciona un selector numérico temático con estilo oscuro.
 - **abc.ABC**: Define clases base abstractas para las interfaces de visitante y observador.
 - **abc.abstractmethod**: Marca métodos que deben ser implementados por las subclases concretas.
 - **random.uniform**: Genera coordenadas aleatorias de punto flotante para las ciudades dentro de los límites.
@@ -40,10 +41,11 @@ las generaciones.
 
 ## Características
 
-- Visualización en tiempo real de la mejor ruta sobre un mapa predefinido
+- Visualización en tiempo real de la mejor ruta sobre un lienzo con borde
 - Evolución animada a lo largo de las 500 generaciones generadas
-- Configuración de ciudades mediante selectores numéricos
-- Controles de **Inicio**, **Pausa** y **Reinicio** para gestionar la evolución de las rutas
+- Configuración de ciudades mediante selector numérico temático
+- Botones de Inicio (verde), Pausa (rojo) y Reinicio (gris) con estados hover
+- Interfaz oscura temática con jerarquía tipográfica consistente
 - Validación de entrada con diálogos visuales de error
 - Estrategia de elitismo que preserva la mejor ruta en cada generación
 - Selección por torneo, Cruce de Orden (OX) y mutación por intercambio

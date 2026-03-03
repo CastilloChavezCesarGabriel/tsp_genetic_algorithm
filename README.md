@@ -18,11 +18,12 @@ preserves the best route found so far, ensuring the solution quality never degra
 
 - **tkinter.Tk**: Provides the main application window for the GUI.
 - **tkinter.Canvas**: Renders cities and route connections on a drawable surface.
-- **tkinter.Button**: Creates interactive buttons that trigger callbacks when clicked.
-- **tkinter.Spinbox**: Allows the user to select a numeric value within a bounded range.
 - **tkinter.Label**: Displays text such as generation count and best distance.
 - **tkinter.Frame**: Groups and organizes widgets into layout sections.
 - **tkinter.messagebox**: Shows error and validation dialogs to the user.
+- **tkinter.ttk.Style**: Configures themed widget styles with custom colors and hover states.
+- **tkinter.ttk.Button**: Creates styled, themed buttons with color variants (Start, Stop, Reset).
+- **tkinter.ttk.Spinbox**: Provides a themed numeric selector with dark styling.
 - **abc.ABC**: Defines abstract base classes for visitor and observer interfaces.
 - **abc.abstractmethod**: Marks methods that must be implemented by concrete subclasses.
 - **random.uniform**: Generates random floating-point city coordinates within bounds.
@@ -38,10 +39,11 @@ preserves the best route found so far, ensuring the solution quality never degra
 
 ## Features
 
-- Real-time visualization of the best route on a canvas
+- Real-time visualization of the best route on a bordered canvas
 - Animated evolution across 500 generations
-- Configurable city count (5 to 30) via spinner input
-- Start, Stop and Reset controls for managing the evolution
+- Configurable city count (5 to 30) via themed spinner input
+- Color-coded Start (green), Stop (red) and Reset (gray) buttons with hover states
+- Themed dark UI with consistent typography hierarchy
 - Input validation with visual error dialogs
 - Elitism strategy preserving the best route each generation
 - Tournament selection, Order Crossover (OX) and swap mutation
