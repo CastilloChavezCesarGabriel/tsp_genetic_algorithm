@@ -8,13 +8,13 @@ class EvolutionModel:
     _DEFAULT_GENERATION_LIMIT = 500
     _TOURNAMENT_SIZE = 3
     _PADDING = 30
+    _ROUTE_FACTORY = RouteFactory(10)
 
     def __init__(self):
         self._current_generation = 0
         self._routes = []
         self._observers = []
         self._city_factory = None
-        self._route_factory = RouteFactory(10)
         self._city_count = 0
 
     def register(self, observer: EvolutionObserver) -> None:
@@ -43,7 +43,7 @@ class EvolutionModel:
         self._city_count = city_count
         self._current_generation = 0
         cities = self._city_factory.scatter(city_count)
-        self._routes = self._route_factory.populate(cities)
+        self._routes = self._ROUTE_FACTORY.populate(cities)
         self._rank()
         self._notify(lambda observer: observer.on_generation_evolved())
 

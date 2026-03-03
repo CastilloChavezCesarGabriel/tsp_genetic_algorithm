@@ -2,17 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 class WidgetAbstractFactory:
-    _TOOLBAR_PADDING = 8
-    _ELEMENT_SPACING = 6
-    _FONT_BODY = ("Helvetica", 11)
-    _FONT_STATISTICS = ("Helvetica", 13, "bold")
+    _SPACING = 6
     _FOREGROUND = "#ECF0F1"
     _BACKGROUND = "#34495E"
-    _BUTTON_STYLES = {
-        "Start": "Start.TButton",
-        "Stop": "Stop.TButton",
-        "Reset": "Reset.TButton"
-    }
 
     def __init__(self, root):
         self._style = ttk.Style(root)
@@ -53,49 +45,48 @@ class WidgetAbstractFactory:
     def create_label(self, parent, text):
         widget = tk.Label(
             parent, text=text,
-            font=self._FONT_BODY,
+            font=("Helvetica", 11),
             fg=self._FOREGROUND,
             bg=self._BACKGROUND)
         widget.pack(
             side=tk.LEFT,
-            padx=self._ELEMENT_SPACING,
-            pady=self._TOOLBAR_PADDING)
+            padx=self._SPACING,
+            pady=self._SPACING + 2)
         return widget
 
     def create_statistics_label(self, parent, text):
         widget = tk.Label(
             parent, text=text,
-            font=self._FONT_STATISTICS,
+            font=("Helvetica", 13, "bold"),
             fg=self._FOREGROUND,
             bg=self._BACKGROUND,
             anchor=tk.CENTER)
         widget.pack(
             side=tk.LEFT,
             expand=True,
-            padx=self._ELEMENT_SPACING)
+            padx=self._SPACING)
         return widget
 
     def create_button(self, parent, text):
-        style_name = self._BUTTON_STYLES.get(text, "TButton")
         widget = ttk.Button(
             parent, text=text,
-            style=style_name, width=8)
-        widget.pack(side=tk.LEFT, padx=self._ELEMENT_SPACING)
+            style=f"{text}.TButton", width=8)
+        widget.pack(side=tk.LEFT, padx=self._SPACING)
         return widget
 
     def create_spinner(self, parent, bounds):
         minimum, maximum = bounds
         widget = ttk.Spinbox(
             parent, from_=minimum, to=maximum,
-            width=4, font=self._FONT_BODY,
+            width=4, font=("Helvetica", 11),
             style="Dark.TSpinbox")
-        widget.pack(side=tk.LEFT, padx=self._ELEMENT_SPACING)
+        widget.pack(side=tk.LEFT, padx=self._SPACING)
         return widget
 
     def create_frame(self, parent):
         widget = tk.Frame(parent, bg=self._BACKGROUND)
         widget.pack(
             side=tk.TOP, fill=tk.X,
-            pady=(self._TOOLBAR_PADDING, 0),
-            padx=self._TOOLBAR_PADDING)
+            pady=(self._SPACING + 2, 0),
+            padx=self._SPACING + 2)
         return widget

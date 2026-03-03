@@ -13,7 +13,6 @@ class Controller(EvolutionObserver, EvolutionVisitor, CityVisitor):
         self._schedule_identifier = None
         self._running = False
         self._city_count = 0
-        self._parser = InputParser(5, 30)
         self._model.register(self)
         self._view.register(self)
 
@@ -24,7 +23,7 @@ class Controller(EvolutionObserver, EvolutionVisitor, CityVisitor):
         self._model.initialize(width, height)
 
     def receive_count(self, text: str) -> None:
-        self._city_count = self._parser.parse(text, "City count")
+        self._city_count = InputParser(5, 30).parse(text, "City count")
 
     def on_generation_evolved(self) -> None:
         self._render()

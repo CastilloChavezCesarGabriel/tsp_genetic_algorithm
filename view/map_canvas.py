@@ -3,24 +3,22 @@ import tkinter as tk
 class MapCanvas:
     _CITY_RADIUS = 6
     _CITY_COLOR = "#E74C3C"
-    _CITY_OUTLINE = "#C0392B"
     _ROUTE_COLOR = "#3498DB"
-    _CANVAS_BACKGROUND = "#1A252F"
-    _BORDER_COLOR = "#455A64"
+    _BACKGROUND = "#1A252F"
 
     def __init__(self, parent, dimensions):
         width, height = dimensions
         border = tk.Frame(
             parent,
-            bg=self._CANVAS_BACKGROUND,
-            highlightbackground=self._BORDER_COLOR,
+            bg=self._BACKGROUND,
+            highlightbackground="#455A64",
             highlightthickness=1)
         border.pack(fill=tk.BOTH, expand=True, padx=12, pady=(4, 12))
         self._canvas = tk.Canvas(
             border,
             width=width,
             height=height,
-            bg=self._CANVAS_BACKGROUND,
+            bg=self._BACKGROUND,
             highlightthickness=0)
         self._canvas.pack(fill=tk.BOTH, expand=True)
 
@@ -39,7 +37,7 @@ class MapCanvas:
             horizontal + self._CITY_RADIUS,
             vertical + self._CITY_RADIUS,
             fill=self._CITY_COLOR,
-            outline=self._CITY_OUTLINE,
+            outline="#C0392B",
             width=2)
 
     def connect(self, origin, destination) -> None:
