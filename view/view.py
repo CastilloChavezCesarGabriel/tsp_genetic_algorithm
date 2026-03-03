@@ -39,6 +39,12 @@ class View:
             text=f"Generation: {generation}  |  Best Distance: {distance:.2f}"
         )
 
+    def summarize(self, generation: int, distance: float) -> None:
+        self._statistics_label.config(
+            text=f"Completed: {generation} generations  |  "
+                 f"Near-optimal Distance: {distance:.2f}"
+        )
+
     def enable_start(self) -> None:
         self._controls.enable_start()
 

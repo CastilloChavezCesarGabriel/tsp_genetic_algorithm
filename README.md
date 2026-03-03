@@ -44,6 +44,7 @@ preserves the best route found so far, ensuring the solution quality never degra
 - Configurable city count (5 to 30) via themed spinner input
 - Color-coded Start (green), Stop (red) and Reset (gray) buttons with hover states
 - Themed dark UI with consistent typography hierarchy
+- Completion summary displaying the near-optimal distance found
 - Input validation with visual error dialogs
 - Elitism strategy preserving the best route each generation
 - Tournament selection, Order Crossover (OX) and swap mutation
@@ -86,7 +87,8 @@ tsp_genetic_algorithm/
 │       └── widget_abstract_factory.py   # Styled Tkinter widget creation
 ├── controller/
 │   ├── controller.py                    # MVC orchestrator
-│   └── route_renderer.py               # Renders route segments on canvas
+│   ├── route_renderer.py               # Renders route segments on canvas
+│   └── summary_visitor.py              # Displays completion summary
 ├── validation/
 │   └── input_parser.py                  # Bounded integer parsing
 └── tests/
@@ -115,7 +117,7 @@ tsp_genetic_algorithm/
 
 4. After each generation, the Model notifies the Controller through the Observer pattern, which in turn redraws the canvas through the Visitor pattern.
 
-5. After 500 generations, the Model signals completion, the Controller halts the animation loop and the View disables the Start and Stop buttons, leaving only the Reset button available to kick off a fresh run.
+5. After 500 generations, the Model signals completion, the Controller halts the animation loop and a `SummaryVisitor` displays the near-optimal distance found. By the way, the View disables the Start and Stop buttons as it leaves only the Reset button available to kick off a fresh run.
 
 ## Setting up on Mac
 

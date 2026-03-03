@@ -34,6 +34,8 @@ class EvolutionModel:
         if not self._routes:
             self.reset(city_count)
             return
+        if self._current_generation >= self._DEFAULT_GENERATION_LIMIT:
+            raise ValueError("Press Reset to start a new run.")
         if city_count != self._city_count:
             raise ValueError("Press Reset to change the number of cities.")
 

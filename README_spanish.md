@@ -46,6 +46,7 @@ las generaciones.
 - Configuración de ciudades mediante selector numérico temático
 - Botones de Inicio (verde), Pausa (rojo) y Reinicio (gris) con estados hover
 - Interfaz oscura temática con jerarquía tipográfica consistente
+- Resumen de finalización mostrando la distancia más óptima encontrada (considerando la cantidad de iteraciones)
 - Validación de entrada con diálogos visuales de error
 - Estrategia de elitismo que preserva la mejor ruta en cada generación
 - Selección por torneo, Cruce de Orden (OX) y mutación por intercambio
@@ -88,7 +89,8 @@ tsp_genetic_algorithm/
 │       └── widget_abstract_factory.py   # Creación de widgets Tkinter con estilo
 ├── controller/
 │   ├── controller.py                    # Orquestador MVC
-│   └── route_renderer.py               # Renderiza segmentos de ruta en el mapa
+│   ├── route_renderer.py               # Renderiza segmentos de ruta en el mapa
+│   └── summary_visitor.py              # Muestra el resumen de finalización
 ├── validation/
 │   └── input_parser.py                  # Análisis de enteros con límites
 └── tests/
@@ -117,7 +119,7 @@ tsp_genetic_algorithm/
 
 4. Después de cada generación, el Modelo notifica al Controlador a través del patrón Observer y este renderiza el lienzo o mapa usando el patrón Visitor.
 
-5. Después de 500 generaciones, el Modelo notifica la finalización, el Controlador detiene los ciclos de animación y la Vista deshabilita los botones de Inicio y Pausa, dejando solamente el botón de Reinicio disponible para comenzar un nuevo caso.
+5. Después de 500 generaciones, el Modelo notifica la finalización, el Controlador detiene los ciclos de animación y un `SummaryVisitor` muestra la distancia más óptima encontrada. Además, la Vista deshabilita los botones de Inicio y Pausa, para dejar solamente el botón de Reinicio disponible y comenzar un nuevo caso.
 
 ## Configuración en Mac
 

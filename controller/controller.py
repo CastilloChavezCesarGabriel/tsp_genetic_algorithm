@@ -1,4 +1,5 @@
 from controller.route_renderer import RouteRenderer
+from controller.summary_visitor import SummaryVisitor
 from model.observers.evolution_observer import EvolutionObserver
 from model.visitors.city_visitor import CityVisitor
 from model.visitors.evolution_visitor import EvolutionVisitor
@@ -33,6 +34,7 @@ class Controller(EvolutionObserver, EvolutionVisitor, CityVisitor):
         self._cancel_loop()
         self._view.complete()
         self._render()
+        self._model.accept(SummaryVisitor(self._view))
 
     def on_start_requested(self) -> None:
         if not self._validate_count():
