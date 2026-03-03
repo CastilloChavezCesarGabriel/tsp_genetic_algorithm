@@ -35,9 +35,7 @@ class EvolutionModel:
             self.reset(city_count)
             return
         if city_count != self._city_count:
-            raise ValueError(
-                "Press Reset to change the number of cities."
-            )
+            raise ValueError("Press Reset to change the number of cities.")
 
     def reset(self, city_count: int) -> None:
         self._city_count = city_count
