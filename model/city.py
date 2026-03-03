@@ -9,6 +9,6 @@ class City:
         visitor.visit(self._horizontal, self._vertical)
 
     def measure_distance(self, destination: 'City') -> float:
-        horizontal_delta = destination._horizontal - self._horizontal
-        vertical_delta = destination._vertical - self._vertical
-        return (horizontal_delta ** 2 + vertical_delta ** 2) ** 0.5
+        horizontal_axis_difference = destination._horizontal - self._horizontal
+        vertical_axis_difference = destination._vertical - self._vertical
+        return (horizontal_axis_difference ** 2 + vertical_axis_difference ** 2) ** 0.5
