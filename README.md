@@ -6,7 +6,7 @@ This GUI program solves the Traveling Salesman Problem (TSP) by generating a set
 evolving a population of candidate routes across 500 generations to find a near-optimal tour. Each generation applies
 tournament selection to choose the fittest parents, Order Crossover (OX) to combine their city sequences into children,
 and swap mutation to introduce diversity between two random cities with a 5% probability. An elitism strategy
-preserves the best route found so far, ensuring the solution quality never degrades across generations.
+preserves the best route found so far, ensuring the solution quality never gets lost across generations.
 
 ## MVC Structure
 
@@ -195,4 +195,5 @@ Creative Commons Attribution 4.0 International License (CC BY 4.0).
 ## Acknowledgements
 
 This project was created as an educational example for demonstrating the Model-View-Controller (MVC) design pattern
+
 in Python with Tkinter.
